@@ -17,7 +17,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 var (
@@ -26,7 +25,7 @@ var (
 	// testRouter     = InitRoute()
 	timeNow = time.Now()
 	posts   = []model.Post{
-		model.Post{
+		{
 			ID:          1,
 			UrlPhoto:    "abc.jpg",
 			Description: "abc",
@@ -34,7 +33,7 @@ var (
 			CreatedAt:   timeNow,
 			Username:    "abc",
 		},
-		model.Post{
+		{
 			ID:          2,
 			UrlPhoto:    "def.jpg",
 			Description: "def",
@@ -42,7 +41,7 @@ var (
 			CreatedAt:   timeNow,
 			Username:    "def",
 		},
-		model.Post{
+		{
 			ID:          1,
 			UrlPhoto:    "ghi.jpg",
 			Description: "ghi",
@@ -77,7 +76,7 @@ func InitRoute(postController IPostController) *gin.Engine {
 }
 
 func TestShowAllError(t *testing.T) {
-	mockService := mocks.IPostService{mock.Mock{}}
+	mockService := mocks.IPostService{}
 	mockService.Mock.On("ShowAll").Return(nil, errors.New("PostService Error"))
 	postController := NewPostController(&mockService)
 	testRouter := InitRoute(postController)
@@ -97,7 +96,7 @@ func TestShowAllError(t *testing.T) {
 }
 
 func TestShowAllSuccess(t *testing.T) {
-	mockService := mocks.IPostService{mock.Mock{}}
+	mockService := mocks.IPostService{}
 	mockService.Mock.On("ShowAll").Return(posts, nil)
 	postController := NewPostController(&mockService)
 	testRouter := InitRoute(postController)
@@ -120,7 +119,7 @@ func TestShowAllSuccess(t *testing.T) {
 }
 
 func TestFindByIDSuccess(t *testing.T) {
-	mockService := mocks.IPostService{mock.Mock{}}
+	mockService := mocks.IPostService{}
 	mockService.Mock.On("FindByID", uint64(1)).Return(posts[0], nil)
 	postController := NewPostController(&mockService)
 	testRouter := InitRoute(postController)
@@ -142,7 +141,7 @@ func TestFindByIDSuccess(t *testing.T) {
 }
 
 func TestFindByIDErrorParsingID(t *testing.T) {
-	mockService := mocks.IPostService{mock.Mock{}}
+	mockService := mocks.IPostService{}
 	postController := NewPostController(&mockService)
 	testRouter := InitRoute(postController)
 
@@ -163,7 +162,7 @@ func TestFindByIDErrorParsingID(t *testing.T) {
 }
 
 func TestFindByIDNotFound(t *testing.T) {
-	mockService := mocks.IPostService{mock.Mock{}}
+	mockService := mocks.IPostService{}
 	mockService.Mock.On("FindByID", uint64(1)).Return(model.Post{}, errors.New("Not Found"))
 	postController := NewPostController(&mockService)
 	testRouter := InitRoute(postController)
@@ -185,7 +184,7 @@ func TestFindByIDNotFound(t *testing.T) {
 }
 
 func TestPageCreateSuccess(t *testing.T) {
-	mockService := mocks.IPostService{mock.Mock{}}
+	mockService := mocks.IPostService{}
 	postController := NewPostController(&mockService)
 	testRouter := InitRoute(postController)
 
@@ -207,7 +206,7 @@ func TestPageCreateSuccess(t *testing.T) {
 }
 
 func TestUpdateSuccess(t *testing.T) {
-	mockService := mocks.IPostService{mock.Mock{}}
+	mockService := mocks.IPostService{}
 	var postDTO service.PostUpdateDTO = service.PostUpdateDTO{
 		ID:          uint64(1),
 		Description: "123",
@@ -233,7 +232,7 @@ func TestUpdateSuccess(t *testing.T) {
 }
 
 func TestDeleteSuccess(t *testing.T) {
-	mockService := mocks.IPostService{mock.Mock{}}
+	mockService := mocks.IPostService{}
 	mockService.Mock.On("FindByID", uint64(1)).Return(posts[0], nil)
 	mockService.Mock.On("Delete", uint64(1)).Return(nil)
 	postController := NewPostController(&mockService)
@@ -250,7 +249,7 @@ func TestDeleteSuccess(t *testing.T) {
 }
 
 func TestPageUpdate(t *testing.T) {
-	mockService := mocks.IPostService{mock.Mock{}}
+	mockService := mocks.IPostService{}
 	mockService.Mock.On("FindByID", uint64(1)).Return(posts[0], nil)
 	postController := NewPostController(&mockService)
 	testRouter := InitRoute(postController)
