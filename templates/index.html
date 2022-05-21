@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/index.css" />
+
+	<title>InstaMock</title>
+</head>
+<body>
+	<div>
+		<h1>InstaMock</h1>
+		<a href="create">Upload</a>
+	</div>
+	<div class="posts">
+		<div>
+			Total Post: {{.TotalPost}}
+		</div>
+		{{range .Data}}
+		<div class="post">
+			<a href="{{.ID}}"><img src="./upload/{{.UrlPhoto}}" alt="" /></a>
+			<div>username: {{.Username}}</div>
+			<div>createdAt: {{.CreatedAt}}</div>
+			<div>likes: {{.Likes}}</div>
+			<div>description: {{.Description}}</div>
+			
+			<!-- <form action="/post/{{.ID}}/edit" method="GET"> -->
+				<!-- <input type="submit" value="edit"> -->
+				<a href="{{.ID}}/edit"><button>Edit</button></a>
+			<!-- </form> -->
+			<form action="/{{.ID}}" method="POST">
+				<input type="submit" value="delete">
+			</form>
+
+		</div>
+		{{end}}
+		<!-- <div class="post">
+			<img src="./upload/batman.jpg" alt="" />
+			<div>username</div>
+			<div>createdAt</div>
+			<div>likes</div>
+			<div>description</div>
+		</div>
+		<div class="post">
+			<img src="./upload/batman.jpg" alt="" />
+			<div>username</div>
+			<div>createdAt</div>
+			<div>likes</div>
+			<div>description</div>
+		</div> -->
+	</div>
+</body>
+</html>

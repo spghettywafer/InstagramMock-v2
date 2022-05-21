@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Instagram-Mock</title>
+</head>
+<body>
+    <div>
+		<h1>Instagram-Mock</h1>
+	</div>
+    <div class="post">
+        <form action="./create" method="post" enctype="multipart/form-data" id="usrform">
+            <input type="file" name="file"><br>
+            <div>username: <input type="text" name="Username" ><br></div>
+        </form>
+        <div>Description:</div>
+        <textarea rows="4" cols="50" name="Description" form="usrform"></textarea><br>
+        <button type="submit" form="usrform">Submit</button>
+    </div>
+</body>
+</html>

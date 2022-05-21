@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/post-detail.css" />
+
+    <title>Instagram-Mock</title>
+</head>
+<body>
+    <div>
+		<h1>Instagram-Mock</h1>
+	</div>
+	<div class="post">
+        <div class="image"><img src="../upload/{{.Data.UrlPhoto}}" alt="" /></div>
+        <div class="post-detail">
+            <form action="./edit" method="post" id="usrform" >
+                <div>username: {{.Data.Username}}</div>
+                <div>createdAt: {{.Data.CreatedAt}}</div>
+                <div>likes: {{.Data.Likes}}</div>
+                <div>description:</div>
+                <textarea rows="4" cols="50" name="Description" form="usrform">{{.Data.Description}}</textarea>
+                <!-- <input type="text" name="description" value="{{.Data.Description}}"> -->
+                <input type="submit" value="submit"><br>
+            </form>
+            <!-- <textarea form ="usrform" name="description" id="taid" cols="35" wrap="soft"></textarea> -->
+        </div>
+    </div>
+    <div class >
+
+    </div>
+
+
+    <!-- <script>
+        function submitForm() {
+          document.getElementById("demo").innerHTML = "Paragraph changed.";
+        }
+    </script> -->
+</body>
+</html>

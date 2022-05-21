@@ -1,0 +1,17 @@
+.post{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin: 50px 0px;
+}
+
+.post-detail{
+    width: 400px;
+}
+
+img{
+    width: 400px;
+    height: 300px;
+    margin: 0 20px;
+    object-fit: cover;
+}
