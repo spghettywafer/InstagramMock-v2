@@ -1,11 +1,11 @@
 package service
 
 import (
+	"errors"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	mock "github.com/stretchr/testify/mock"
 
 	"InstagramMock-v2/model"
 	mocks "InstagramMock-v2/repository/mocks"
@@ -13,10 +13,10 @@ import (
 
 var (
 	timeNow     time.Time             = time.Now()
-	mockRepo    mocks.IPostRepository = mocks.IPostRepository{mock.Mock{}}
+	mockRepo    mocks.IPostRepository = mocks.IPostRepository{}
 	postService                       = NewPostService(&mockRepo)
 	posts                             = []model.Post{
-		model.Post{
+		{
 			ID:          1,
 			UrlPhoto:    "abc.jpg",
 			Description: "abc",
@@ -24,7 +24,7 @@ var (
 			CreatedAt:   timeNow,
 			Username:    "abc",
 		},
-		model.Post{
+		{
 			ID:          2,
 			UrlPhoto:    "def.jpg",
 			Description: "def",
@@ -32,7 +32,7 @@ var (
 			CreatedAt:   timeNow,
 			Username:    "def",
 		},
-		model.Post{
+		{
 			ID:          1,
 			UrlPhoto:    "ghi.jpg",
 			Description: "ghi",
@@ -92,9 +92,10 @@ func TestDelete(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-func TestShowAll(t *testing.T) {
+func TestShowAllSuccess(t *testing.T) {
+	mockRepo = mocks.IPostRepository{}
 	mockRepo.Mock.On("ShowAll").Return(posts, nil)
-
+	postService = NewPostService(&mockRepo)
 	result, err := postService.ShowAll()
 
 	assert.Nil(t, err)
@@ -102,6 +103,16 @@ func TestShowAll(t *testing.T) {
 	for i, post := range result {
 		assert.Equal(t, posts[i], post)
 	}
+}
+
+func TestShowAllError(t *testing.T) {
+	mockRepo = mocks.IPostRepository{}
+	mockRepo.Mock.On("ShowAll").Return([]model.Post{}, errors.New("Error From DB"))
+	postService = NewPostService(&mockRepo)
+	result, err := postService.ShowAll()
+
+	assert.NotNil(t, err)
+	assert.Empty(t, result)
 }
 
 func TestFindById(t *testing.T) {

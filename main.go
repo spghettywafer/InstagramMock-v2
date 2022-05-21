@@ -26,11 +26,6 @@ func InitRoute() *gin.Engine {
 	router.Static("/css", "./templates/css")
 	router.Static("/upload", "./upload")
 	router.LoadHTMLGlob("templates/*.html")
-	//html
-	// router.GET("/")
-
-	//read, findbyid, create, update, delete,
-	//pageDetail, pageUpdate, pageCreate
 
 	router.GET("/", postController.ShowAll)
 	router.GET("/:id", postController.FindByID)
@@ -47,11 +42,6 @@ func main() {
 	defer config.CloseDatabaseConnection(db)
 	fmt.Println("Instagram-Mock")
 
-	// router.GET("/", func(ctx *gin.Context) {
-	// 	ctx.JSON(http.StatusOK, gin.H{
-	// 		"hello": "world",
-	// 	})
-	// })
 	router := InitRoute()
 
 	router.Run()

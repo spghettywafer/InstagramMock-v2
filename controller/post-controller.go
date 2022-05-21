@@ -39,6 +39,7 @@ func (c *PostController) ShowAll(ctx *gin.Context) {
 		ctx.HTML(http.StatusBadRequest, "page-bad-request.html", nil)
 		return
 	}
+
 	data := gin.H{
 		"Data":      posts,
 		"TotalPost": len(posts),

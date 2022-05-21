@@ -61,7 +61,16 @@ func (s *PostService) Delete(postID uint64) error {
 }
 
 func (s *PostService) ShowAll() ([]model.Post, error) {
-	return s.postRepo.ShowAll()
+	posts, err := s.postRepo.ShowAll()
+	if err != nil {
+		return posts, err
+	}
+
+	for i := range posts {
+		posts[i].Description = posts[i].GetShortDescription()
+	}
+
+	return posts, nil
 }
 
 func (s *PostService) FindByID(postID uint64) (model.Post, error) {
